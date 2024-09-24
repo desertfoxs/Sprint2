@@ -1,4 +1,5 @@
 <?php
+//ESTA CONEXION HABRIA QUE MODULARIZARLA
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -11,6 +12,7 @@ if ($conn->connect_error) {
 }
 
 if ($conn) {
+    //TRAIGO A TODOS LOS USUARIOS PARA MOSTRAR EN PANTALLA
 
     $consulta = "SELECT * FROM usuario";
     $resultado = mysqli_query($conn, $consulta);
@@ -50,6 +52,7 @@ $conn->close();
         <table id="myTable" class="display">
             <thead>
                 <tr>
+                    <!-- Agrego todas las columnas que necesito -->
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>NickName</th>
@@ -61,6 +64,7 @@ $conn->close();
 
             <?php
             if ($resultado) {
+                //Este While itera con todos los elementos del array, es decir con todos los usuarios cargados
                 while ($row = $resultado->fetch_array()) {
                     $nombre = $row['nombre'];
                     $apellido = $row['apellido'];
@@ -70,15 +74,14 @@ $conn->close();
                     ?>
 
                     <!-- aca agregar la lista-->
-
                     <tbody>
                         <tr>
                             <td> <?php echo $nombre?> </td>
-                            <td> <?php echo  $apellido?> </td>
+                            <td> <?php echo $apellido?> </td>
                             <td> <?php echo $nickname?> </td>
                             <td> <?php echo $email?> </td>
                             <td> <?php echo $rol?> </td>
-                            <td> <a href="">eliminar</a> -- <a href="">modificar</a> </td>
+                            <td> <a href="eliminarBD.php?email=<?= $row['email']?>" action="eliminar.php">eliminar</a> -- <a href="">modificar</a> </td>
                         </tr>
                     </tbody>
 
@@ -103,7 +106,7 @@ $conn->close();
 
 <script>
 
-    // aca agregamos el link de la tabla
+    // aca hacemos que la tabla se convierta en una DateTable
     $(document).ready(function () {
         $('#myTable').DataTable();
     });

@@ -1,28 +1,3 @@
-<?php
-//ESTA CONEXION HABRIA QUE MODULARIZARLA    
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "proyecto_db";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-
-if ($conn) {
-
-    //PIDO LOS ROLES PARA USARLO EN EL LISTBOXS
-    $consulta = "SELECT * FROM rol";
-    $resultado = mysqli_query($conn, $consulta);
-
-}
-
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -48,11 +23,10 @@ $conn->close();
     </header>
 
     <div class="container">
-        <h2>Registro de Usuario</h2>
-    
-        <!-- Aca comienza el formulario -->
+        <h2>Modificar Usuario</h2>
+        
         <form method="post" action="agregarBD.php">
-
+            
             <div class="mb-3">
                 <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
             </div>
@@ -65,26 +39,13 @@ $conn->close();
             <div class="mb-3">
                 <input type="email" class="form-control" id="email" name="email" placeholder="email" required>
             </div>
-
-            <!-- Aca esta la logica del listBox para llenarlo con los roles que existen -->
-            <div class="listbox-container">
-                <select class="form-select" id="rol" name="rol" required>
+            <div class="checkbox-container">
+                <select class="form-select" id="rol" name="rol" required>   
                     <option value="">Seleccione un rol</option>
-                    <?php
-                    if ($resultado) {
-                        while ($row = $resultado->fetch_array()) {
-                            $rol = $row['nombre'];
-                            ?>
-
-                            <option value="<?php echo $rol ?>"><?php echo $rol ?></option>
-
-                            <?php
-                        }
-                    }
-                    ?>
+                    <option value="admin">Administrador</option>
+                    <option value="user">Usuario regular</option>
                 </select>
             </div>
-
             <button type="submit" class="btn btn-primary">Registrar</button>
         </form>
     </div>
