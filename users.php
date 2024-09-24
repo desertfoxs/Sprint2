@@ -1,14 +1,10 @@
 <?php
-//ESTA CONEXION HABRIA QUE MODULARIZARLA
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "proyecto_db";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+require 'baseDeDatos.php';
 
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+if (isset($_GET['email'])) { // Verificar si se solicitó eliminar un usuario
+    $email = $_GET['email'];
+    eliminarUsuario($conn, $email); // Llama a la función dentro de baseDeDatos.php
 }
 
 if ($conn) {
@@ -16,7 +12,6 @@ if ($conn) {
 
     $consulta = "SELECT * FROM usuario";
     $resultado = mysqli_query($conn, $consulta);
-
 }
 
 $conn->close();
@@ -71,21 +66,23 @@ $conn->close();
                     $nickname = $row['nickname'];
                     $email = $row['email'];
                     $rol = $row['rol'];
-                    ?>
+            ?>
 
-                    <!-- aca agregar la lista-->
+                    <!-- genero la lista de usuarios-->
                     <tbody>
                         <tr>
-                            <td> <?php echo $nombre?> </td>
-                            <td> <?php echo $apellido?> </td>
-                            <td> <?php echo $nickname?> </td>
-                            <td> <?php echo $email?> </td>
-                            <td> <?php echo $rol?> </td>
-                            <td> <a href="eliminarBD.php?email=<?= $row['email']?>" action="eliminar.php">eliminar</a> -- <a href="">modificar</a> </td>
+                            <td> <?php echo $nombre ?> </td>
+                            <td> <?php echo $apellido ?> </td>
+                            <td> <?php echo $nickname ?> </td>
+                            <td> <?php echo $email ?> </td>
+                            <td> <?php echo $rol ?> </td>
+                            <!-- Explicacion de los links. Al tocar en el link, se carga en la URL el parametro email que es el email del usuario -->
+                            <!-- saque el atributo "action" dentro del link "eliminar", ahora preguntamos al principio en un php si se cargo un parametro email para eliminarlo-->
+                            <td> <a href="users.php?email=<?= $row['email'] ?>" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">eliminar</a> -- <a href="">modificar</a> </td>
                         </tr>
                     </tbody>
 
-                    <?php
+            <?php
                 }
             }
             ?>
@@ -105,10 +102,8 @@ $conn->close();
 
 
 <script>
-
     // aca hacemos que la tabla se convierta en una DateTable
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#myTable').DataTable();
     });
-
 </script>

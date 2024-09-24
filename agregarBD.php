@@ -1,15 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "proyecto_db";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-
+require 'baseDeDatos.php';
 $mensaje = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssss", $nombre, $apellido, $nickname, $email, $rol);
 
-    if ($stmt->execute()) {
+    if (agregarUsuario($conn, $nombre, $apellido, $nickname, $email, $rol)) {   //funcion dentro de baseDeDatos.php
         $mensaje = "Usuario registrado con éxito";
     } else {
         $mensaje = "Error: " . $stmt->error;

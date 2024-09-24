@@ -1,26 +1,10 @@
 <?php
-//ESTA CONEXION HABRIA QUE MODULARIZARLA    
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "proyecto_db";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
+require 'baseDeDatos.php';
 
 if ($conn) {
-
-    //PIDO LOS ROLES PARA USARLO EN EL LISTBOXS
-    $consulta = "SELECT * FROM rol";
-    $resultado = mysqli_query($conn, $consulta);
-
+    $listadoDeRoles = obtenerRoles($conn);//funcion dentro de baseDeDatos.php
 }
-
-$conn->close();
+$conn->close(); //si cerramos la conexion aca, entonces no la podemos usar en el resto del script?
 ?>
 
 <!DOCTYPE html>
@@ -71,8 +55,8 @@ $conn->close();
                 <select class="form-select" id="rol" name="rol" required>
                     <option value="">Seleccione un rol</option>
                     <?php
-                    if ($resultado) {
-                        while ($row = $resultado->fetch_array()) {
+                    if ($listadoDeRoles) {
+                        while ($row = $listadoDeRoles->fetch_array()) {
                             $rol = $row['nombre'];
                             ?>
 
