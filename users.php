@@ -2,7 +2,7 @@
 
 require 'baseDeDatos.php';
 
-if (isset($_GET['email'])) { // Verificar si se solicitó eliminar un usuario
+if (isset($_GET['email'])) { // Verificar si se solicitó eliminar un usuario (si esta el email por parametro)
     $email = $_GET['email'];
     eliminarUsuario($conn, $email); // Llama a la función dentro de baseDeDatos.php
 }
@@ -78,7 +78,10 @@ $conn->close();
                             <td> <?php echo $rol ?> </td>
                             <!-- Explicacion de los links. Al tocar en el link, se carga en la URL el parametro email que es el email del usuario -->
                             <!-- saque el atributo "action" dentro del link "eliminar", ahora preguntamos al principio en un php si se cargo un parametro email para eliminarlo-->
-                            <td> <a href="users.php?email=<?= $row['email'] ?>" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">eliminar</a> -- <a href="">modificar</a> </td>
+                            <td> <a href="users.php?email=<?= $row['email'] ?>" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">eliminar</a>
+                                --
+                                <a href="modificarUsuario.php?nombre=<?= urlencode($row['nombre']) ?>&apellido=<?= urlencode($row['apellido']) ?>&nickname=<?= urlencode($row['nickname']) ?>&email=<?= urlencode($row['email']) ?>&rol=<?= urlencode($row['rol']) ?>">modificar</a>
+                            </td>
                         </tr>
                     </tbody>
 

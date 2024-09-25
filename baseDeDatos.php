@@ -45,3 +45,12 @@ function eliminarUsuario($conn, $email)
     header("Location: users.php"); //redirige a la pagina users.php
     exit();
 }
+function modificarUsuario($conn, $nombre, $apellido, $nickname, $email, $rol) //Por parametro se pasarian los valores a modificar. El mail no se modifica por ahora, es solo la clave para buscar en la BD.
+{
+    echo "$email";
+    $sql = "UPDATE usuario SET apellido = ?, nombre = ?, nickname = ?, rol = ? WHERE email = ?;";
+    //<!--"INSERT INTO usuario (nombre, apellido, nickname, email, rol) VALUES (?, ?, ?, ?, ?)";-->
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssss", $nombre, $apellido, $nickname, $rol, $email);
+    return $stmt->execute();
+}
