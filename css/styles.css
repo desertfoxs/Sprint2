@@ -78,7 +78,7 @@ input {
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid var(--border-color);
-    background-color: var(--bg-color);
+                    background-color: var(--bg-color);
     color: var(--text-color);
 }
 

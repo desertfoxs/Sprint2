@@ -24,6 +24,7 @@ $conn->close(); //si cerramos la conexion aca, entonces no la podemos usar en el
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,8 +64,8 @@ $conn->close(); //si cerramos la conexion aca, entonces no la podemos usar en el
                     placeholder="<?php echo $_GET['nickname'] ?>" required>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="email" name="email"
-                    value="<?php echo $_GET['email'] ?>" readonly>
+                <input type="text" class="form-control" id="email" name="email" value="<?php echo $_GET['email'] ?>"
+                    readonly>
             </div>
 
             <!-- Aca esta la logica del listBox para llenarlo con los roles que existen -->
@@ -87,8 +88,8 @@ $conn->close(); //si cerramos la conexion aca, entonces no la podemos usar en el
             </div>
 
             <button type="submit">Registrar</button>
-            
-            <button type="button" onclick="history.back()">Volver</button>
+
+            <button type="button" onclick="window.location.href='users.php'">Volver</button>
 
         </form>
     </div>
