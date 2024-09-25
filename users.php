@@ -66,7 +66,7 @@ $conn->close();
                     $nickname = $row['nickname'];
                     $email = $row['email'];
                     $rol = $row['rol'];
-            ?>
+                    ?>
 
                     <!-- genero la lista de usuarios-->
                     <tbody>
@@ -78,14 +78,25 @@ $conn->close();
                             <td> <?php echo $rol ?> </td>
                             <!-- Explicacion de los links. Al tocar en el link, se carga en la URL el parametro email que es el email del usuario -->
                             <!-- saque el atributo "action" dentro del link "eliminar", ahora preguntamos al principio en un php si se cargo un parametro email para eliminarlo-->
-                            <td> <a href="users.php?email=<?= $row['email'] ?>" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">eliminar</a>
-                                --
-                                <a href="modificarUsuario.php?nombre=<?= urlencode($row['nombre']) ?>&apellido=<?= urlencode($row['apellido']) ?>&nickname=<?= urlencode($row['nickname']) ?>&email=<?= urlencode($row['email']) ?>&rol=<?= urlencode($row['rol']) ?>">modificar</a>
+                            <td> <a href="users.php?email=<?= $row['email'] ?>"
+                                    onclick="return confirm('¿Estás seguro de eliminar este usuario?');">
+
+                                    <image src="images/eliminar.png" width="32" height="32"></image>
+
+                                </a>
+                                <a
+                                    href="modificarUsuario.php?nombre=<?= urlencode($row['nombre']) ?>&apellido=<?= urlencode($row['apellido']) ?>&nickname=<?= urlencode($row['nickname']) ?>&email=<?= urlencode($row['email']) ?>&rol=<?= urlencode($row['rol']) ?>">  
+                                
+                                    <image src="images/editar.png" width="32" height="32"></image>
+
+                                </a>
+
+
                             </td>
                         </tr>
                     </tbody>
 
-            <?php
+                    <?php
                 }
             }
             ?>
@@ -106,7 +117,7 @@ $conn->close();
 
 <script>
     // aca hacemos que la tabla se convierta en una DateTable
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#myTable').DataTable();
     });
 </script>

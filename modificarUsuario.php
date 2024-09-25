@@ -4,40 +4,31 @@ require 'baseDeDatos.php';
 if ($conn) {
     $listadoDeRoles = obtenerRoles($conn); //funcion dentro de baseDeDatos.php
 }
-// Verifica si se ha enviado el formulario
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    var_dump($_GET);
-    // Recuperar los datos enviados por el formulario
-    echo "nuevonombre es";
-    echo $email;
-    $nuevoNombre = $_POST['nombre'];
-    $nuevoApellido = $_POST['apellido'];
-    $nuevoNickname = $_POST['nickname'];
-    $nuevoEmail = $email;
-    $nuevoRol = $_POST['rol'];
 
-    // Verifica que la conexión esté activa
-    if ($conn) {
-        // Llama a la función modificarUsuario para actualizar los datos
-        if (modificarUsuario($conn, $nuevoNombre, $nuevoApellido, $nuevoNickname, $nuevoEmail, $nuevoRol)) {
-            echo "Usuario actualizado con éxito";
-        } else {
-            echo "Error al actualizar el usuario";
-        }
-    }
+//var_dump($_GET); // esto era para mostrar en pantalla
+// Recuperar los datos enviados por el formulario
+$nuevoNombre = $_GET['nombre'];
+$nuevoApellido = $_GET['apellido'];
+$nuevoNickname = $_GET['nickname'];
+$nuevoEmail = $_GET['email'];
+$nuevoRol = $_GET['rol'];
+
+// Verifica que la conexión esté activa
+if ($conn) {
+    // Llama a la función modificarUsuario para actualizar los datos
+    modificarUsuario($conn, $nuevoNombre, $nuevoApellido, $nuevoNickname, $nuevoEmail, $nuevoRol);
 }
-var_dump($_GET); //debug en la ventana
+
 $conn->close(); //si cerramos la conexion aca, entonces no la podemos usar en el resto del script?
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuario</title>
     <link rel="stylesheet" href="css/styles.css">
-
 </head>
 
 
@@ -57,20 +48,23 @@ $conn->close(); //si cerramos la conexion aca, entonces no la podemos usar en el
         <h2>Modificacion de usuario</h2>
 
         <!-- Aca comienza el formulario -->
-        <form method="POST" action="modificarUsuario.php">
+        <form method="GET" action="modificarUsuario.php">
 
             <div class="mb-3">
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="<?php echo $_GET['nombre'] ?>" required>
+                <input type="text" class="form-control" id="nombre" name="nombre"
+                    placeholder="<?php echo $_GET['nombre'] ?>" required>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="<?php echo $_GET['apellido'] ?>" required>
+                <input type="text" class="form-control" id="apellido" name="apellido"
+                    placeholder="<?php echo $_GET['apellido'] ?>" required>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="nickname" name="nickname" placeholder="<?php echo $_GET['nickname'] ?>" required>
+                <input type="text" class="form-control" id="nickname" name="nickname"
+                    placeholder="<?php echo $_GET['nickname'] ?>" required>
             </div>
             <div class="mb-3">
-                <!-- Campo oculto para el email, ya que probablemente no quieras modificarlo -->
-                <!--<input type="hidden" name="email" value="">-->
+                <input type="text" class="form-control" id="email" name="email"
+                    value="<?php echo $_GET['email'] ?>" readonly>
             </div>
 
             <!-- Aca esta la logica del listBox para llenarlo con los roles que existen -->
@@ -81,17 +75,21 @@ $conn->close(); //si cerramos la conexion aca, entonces no la podemos usar en el
                     if ($listadoDeRoles) {
                         while ($row = $listadoDeRoles->fetch_array()) {
                             $rol = $row['nombre'];
-                    ?>
+                            ?>
 
                             <option value="<?php echo $rol ?>"><?php echo $rol ?></option>
 
-                    <?php
+                            <?php
                         }
                     }
                     ?>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Registrar</button>
+
+            <button type="submit">Registrar</button>
+            
+            <button type="button" onclick="history.back()">Volver</button>
+
         </form>
     </div>
 </body>

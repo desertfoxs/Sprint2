@@ -11,8 +11,6 @@ if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-
-
 function obtenerRoles($conn)
 {
     $consulta = "SELECT * FROM rol";
@@ -47,10 +45,12 @@ function eliminarUsuario($conn, $email)
 }
 function modificarUsuario($conn, $nombre, $apellido, $nickname, $email, $rol) //Por parametro se pasarian los valores a modificar. El mail no se modifica por ahora, es solo la clave para buscar en la BD.
 {
-    echo "$email";
-    $sql = "UPDATE usuario SET apellido = ?, nombre = ?, nickname = ?, rol = ? WHERE email = ?;";
+    //echo "$email";
+    $sql = "UPDATE usuario SET nombre = ?, apellido = ?, nickname = ?, rol = ? WHERE email = ?;";
     //<!--"INSERT INTO usuario (nombre, apellido, nickname, email, rol) VALUES (?, ?, ?, ?, ?)";-->
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssss", $nombre, $apellido, $nickname, $rol, $email);
+    
     return $stmt->execute();
 }
